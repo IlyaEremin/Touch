@@ -14,6 +14,7 @@ public class IlyasView extends View {
 
     private int      x;
     private int      y;
+    private int      dy;
 
     public IlyasView(Context context) {
         super(context);
@@ -21,16 +22,40 @@ public class IlyasView extends View {
 
     public IlyasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        x = 500;
+        y = 500;
+        dy = 5;
+
+        int borderu = 100;
+        int borders = 1000;
+
         moveCircle = new Runnable() {
             @Override public void run() {
                 move();
                 runAnimation();
+                invalidate();
+                border();
+
             }
+
         };
+        runAnimation();
+    }
+
+    public void border(){
+        if (y == 100) {
+           dy=0;
+        }
+
+    }
+
+        public void move() {
+        y = y-dy;
+
     }
 
     private void runAnimation() {
-        postDelayed(moveCircle, 100);
+        postDelayed(moveCircle, 10);
     }
 
     public IlyasView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -42,12 +67,8 @@ public class IlyasView extends View {
 
         Paint paint = new Paint();
         paint.setColor(Color.CYAN);
-        canvas.drawCircle(720, 1480, 100, paint);
-    }
+        canvas.drawCircle(x, y, 100, paint);
 
-    public void move() {
-        x++;
-        y++;
     }
 
     @Override protected void onDetachedFromWindow() {
