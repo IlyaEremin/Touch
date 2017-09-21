@@ -34,17 +34,16 @@ public class IlyasView extends View {
 
         Paint paint = new Paint();
         paint.setColor(Color.CYAN);
-        canvas.drawCircle(x, y, 5, paint);
+        canvas.drawCircle(720, 1480, 100, paint);
     }
 
-    @Override public boolean onTouchEvent(MotionEvent event) {
-        x = (int) event.getX();
-        y = (int) event.getY();
+    public void move() {
 
-        Log.i("lyboe slovo", "x: " + x + " y:" + y);
-
-        invalidate();
-
-        return super.onTouchEvent(event);
+        x++;
+        y++;
     }
+
+
+
+
 }
