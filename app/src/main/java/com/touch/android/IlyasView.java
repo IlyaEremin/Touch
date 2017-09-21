@@ -6,16 +6,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
 public class IlyasView extends View {
 
-    private static final String TAG = "IlyasView";
+    private Runnable moveCircle;
 
-    private int x;
-    private int y;
+    private int      x;
+    private int      y;
 
     public IlyasView(Context context) {
         super(context);
@@ -23,6 +21,16 @@ public class IlyasView extends View {
 
     public IlyasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        moveCircle = new Runnable() {
+            @Override public void run() {
+                move();
+                runAnimation();
+            }
+        };
+    }
+
+    private void runAnimation() {
+        postDelayed(moveCircle, 100);
     }
 
     public IlyasView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -38,12 +46,12 @@ public class IlyasView extends View {
     }
 
     public void move() {
-
         x++;
         y++;
     }
 
-
-
-
+    @Override protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        removeCallbacks(moveCircle);
+    }
 }
