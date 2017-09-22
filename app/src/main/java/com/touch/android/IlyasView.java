@@ -22,37 +22,52 @@ public class IlyasView extends View {
 
     public IlyasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        x = 500;
-        y = 500;
-        dy = 5;
+        x = 748;  // координаты старта
+        y = 900; // координаты старта
+        dy = 5; // скорость движения
 
-        int borderu = 100;
-        int borders = 1000;
+        //int borderu = 100; // ввод границы остановки, верхней
+        //int borders = 1000; // ввод границы отановки, нижний
 
         moveCircle = new Runnable() {
             @Override public void run() {
-                move();
+                move1();
                 runAnimation();
                 invalidate();
-                border();
-
+                borderu();
+                move2();
+                borders();
             }
 
         };
         runAnimation();
     }
 
-    public void border(){
+    public void borderu() {  // координаты остановки на верху
         if (y == 100) {
-           dy=0;
+          dy=0;
         }
-
     }
 
-        public void move() {
+    public void move1() { // движение вверх
         y = y-dy;
 
     }
+
+    public void borders() {  // координаты остановки на верху
+        if (y == 900) {
+            dy=0;
+        }
+    }
+
+    public void move2() {
+        if (y==100) {
+            dy--;
+        }
+    }
+
+
+
 
     private void runAnimation() {
         postDelayed(moveCircle, 10);
