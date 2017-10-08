@@ -26,11 +26,8 @@ public class IlyasView extends View {
         y = 1500; // координаты старта
         dy = 5; // скорость движения
 
-        //int borderu = 100; // ввод границы остановки, верхней
-        //int borders = 1000; // ввод границы отановки, нижний
-
         moveCircle = new Runnable() {
-            @Override
+
             public void run() {
                 move1();
                 runAnimation();
@@ -38,12 +35,11 @@ public class IlyasView extends View {
                 borderu();
                 move2();
                 borders();
-
-
             }
 
         };
         runAnimation();
+
     }
 
     public void borderu() {  // координаты остановки на верху
@@ -59,7 +55,7 @@ public class IlyasView extends View {
 
     public void move2() { // движение вниз
         if (y == 100) {
-            dy =- 5;
+            dy = -5;
         }
     }
 
@@ -67,10 +63,12 @@ public class IlyasView extends View {
         if (y == 1500) {
             dy = 0;
         }
+
     }
 
     private void runAnimation() {
         postDelayed(moveCircle, 10);
+
     }
 
     public IlyasView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -78,7 +76,7 @@ public class IlyasView extends View {
 
     }
 
-    @Override
+    @Override                 //рисует по заданным координатам
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
@@ -88,10 +86,11 @@ public class IlyasView extends View {
 
     }
 
-    @Override
+    @Override               //выводит на экран
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         removeCallbacks(moveCircle);
     }
 
 }
+
