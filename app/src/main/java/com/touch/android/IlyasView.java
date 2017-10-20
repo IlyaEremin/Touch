@@ -35,6 +35,7 @@ public class IlyasView extends View {
                 borderu();
                 move2();
                 borders();
+                move3();
             }
 
         };
@@ -59,11 +60,16 @@ public class IlyasView extends View {
         }
     }
 
-    public void borders() {  // координаты остановки на внизу
+    public void borders() {  // координаты остановки внизу
         if (y == 1500) {
             dy = 0;
         }
 
+    }
+    public void move3(){
+        if (y==1500){
+            dy = 5;
+        }
     }
 
     private void runAnimation() {
