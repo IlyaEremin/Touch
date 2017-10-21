@@ -22,9 +22,13 @@ public class IlyasView extends View {
 
     public IlyasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        x = 748;  // координаты старта
+        x = 400;  // координаты старта
         y = 1500; // координаты старта
         dy = 5; // скорость движения
+
+
+        int widht = getMeasuredWidth();
+        int height = getMeasuredHeight();
 
         moveCircle = new Runnable() {
 
@@ -34,6 +38,7 @@ public class IlyasView extends View {
                 invalidate();
                 borderu();
                 move2();
+
                 borders();
                 move3();
             }
@@ -41,6 +46,18 @@ public class IlyasView extends View {
         };
         runAnimation();
 
+    }
+
+    public void borders() {  // координаты остановки внизу
+        if (y == 1500) {
+            dy = 0;
+        }
+    }
+
+    public void move3() {
+        if (y == 1500) {
+            dy = 5;
+        }
     }
 
     public void borderu() {  // координаты остановки на верху
@@ -51,24 +68,11 @@ public class IlyasView extends View {
 
     public void move1() { // движение вверх
         y = y - dy;
-
     }
 
     public void move2() { // движение вниз
         if (y == 100) {
             dy = -5;
-        }
-    }
-
-    public void borders() {  // координаты остановки внизу
-        if (y == 1500) {
-            dy = 0;
-        }
-
-    }
-    public void move3(){
-        if (y==1500){
-            dy = 5;
         }
     }
 
@@ -97,6 +101,4 @@ public class IlyasView extends View {
         super.onDetachedFromWindow();
         removeCallbacks(moveCircle);
     }
-
 }
-
