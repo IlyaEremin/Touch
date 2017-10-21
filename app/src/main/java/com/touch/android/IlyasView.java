@@ -13,21 +13,24 @@ import android.view.ViewTreeObserver;
 
 public class IlyasView extends View {
 
+
     private Runnable moveCircle;
 
     private int x;
     private int y;
     private int dy;
-
+    private int bottomBorder;
+    private int speed = 10;
+    private int radius = 100;
     public IlyasView(Context context) {
         super(context);
     }
 
     public IlyasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        x = 400;  // координаты старта
-        y = 1500; // координаты старта
-        dy = 5; // скорость движения
+//        x = 400;  // координаты старта
+//        y = 1500; // координаты старта
+        dy = speed; // скорость движения
 
         moveCircle = new Runnable() {
 
@@ -49,8 +52,8 @@ public class IlyasView extends View {
             @Override
             public void onGlobalLayout() {
 
-                x = getMeasuredWidth()/2;
-                y = getMeasuredHeight()/2;
+                x = getMeasuredWidth() / 2;
+                y = getMeasuredHeight() / 2;
 
                 if (Build.VERSION.SDK_INT < 16) {
                     getViewTreeObserver().removeGlobalOnLayoutListener(this);
@@ -59,24 +62,40 @@ public class IlyasView extends View {
                 }
 
             }
+
         });
 
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                bottomBorder = getMeasuredHeight() - radius;
+
+                if (Build.VERSION.SDK_INT < 16) {
+                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                } else {
+                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+
+            }
+
+        });
     }
 
     public void borders() {  // координаты остановки внизу
-        if (y > 1500) {
+        if (y > bottomBorder) {
             dy = 0;
         }
     }
 
     public void move3() {
-        if (y > 1500) {
-            dy = 5;
+        if (y > bottomBorder) {
+            dy = speed;
         }
     }
 
     public void borderu() {  // координаты остановки на верху
-        if (y < 100) {
+        if (y < radius) {
             dy = 0;
         }
     }
@@ -86,8 +105,8 @@ public class IlyasView extends View {
     }
 
     public void move2() { // движение вниз
-        if (y < 100) {
-            dy = -5;
+        if (y < radius) {
+            dy = -speed;
         }
     }
 
@@ -107,7 +126,7 @@ public class IlyasView extends View {
 
         Paint paint = new Paint();
         paint.setColor(Color.CYAN);
-        canvas.drawCircle(x, y, 100, paint);
+        canvas.drawCircle(x, y, radius, paint);
 
     }
 
