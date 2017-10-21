@@ -4,9 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewTreeObserver;
+
 
 public class IlyasView extends View {
 
@@ -26,10 +29,6 @@ public class IlyasView extends View {
         y = 1500; // координаты старта
         dy = 5; // скорость движения
 
-
-        int widht = getMeasuredWidth();
-        int height = getMeasuredHeight();
-
         moveCircle = new Runnable() {
 
             public void run() {
@@ -46,22 +45,38 @@ public class IlyasView extends View {
         };
         runAnimation();
 
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                x = getMeasuredWidth()/2;
+                y = getMeasuredHeight()/2;
+
+                if (Build.VERSION.SDK_INT < 16) {
+                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                } else {
+                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+
+            }
+        });
+
     }
 
     public void borders() {  // координаты остановки внизу
-        if (y == 1500) {
+        if (y > 1500) {
             dy = 0;
         }
     }
 
     public void move3() {
-        if (y == 1500) {
+        if (y > 1500) {
             dy = 5;
         }
     }
 
     public void borderu() {  // координаты остановки на верху
-        if (y == 100) {
+        if (y < 100) {
             dy = 0;
         }
     }
@@ -71,7 +86,7 @@ public class IlyasView extends View {
     }
 
     public void move2() { // движение вниз
-        if (y == 100) {
+        if (y < 100) {
             dy = -5;
         }
     }
