@@ -13,20 +13,23 @@ import android.view.ViewTreeObserver;
 
 public class IlyasView extends View {
 
+
     private Runnable moveCircle;
+
     private int x;
     private int y;
     private int dy;
     private int bottomBorder;
     private int speed = 10;
-    private int radius;
-
+    private int radius = 100;
     public IlyasView(Context context) {
         super(context);
     }
 
     public IlyasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+//        x = 400;  // координаты старта
+//        y = 1500; // координаты старта
         dy = speed; // скорость движения
 
         moveCircle = new Runnable() {
@@ -41,6 +44,7 @@ public class IlyasView extends View {
                 borders();
                 move3();
             }
+
         };
         runAnimation();
 
@@ -50,9 +54,22 @@ public class IlyasView extends View {
 
                 x = getMeasuredWidth() / 2;
                 y = getMeasuredHeight() / 2;
-                radius = getMeasuredWidth() / 10;
+
+                if (Build.VERSION.SDK_INT < 16) {
+                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                } else {
+                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+
+            }
+
+        });
+
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
                 bottomBorder = getMeasuredHeight() - radius;
-                speed = getMeasuredHeight() / 100;
 
                 if (Build.VERSION.SDK_INT < 16) {
                     getViewTreeObserver().removeGlobalOnLayoutListener(this);
