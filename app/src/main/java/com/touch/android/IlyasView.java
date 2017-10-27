@@ -28,8 +28,7 @@ public class IlyasView extends View {
 
     public IlyasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-//        x = 400;  // координаты старта
-//        y = 1500; // координаты старта
+
         dy = speed; // скорость движения
 
         moveCircle = new Runnable() {
